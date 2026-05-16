@@ -113,9 +113,9 @@ export default function App() {
           </div>
 
           <div className="flex items-center space-x-4">
-            <a href="https://linkedin.com/in/ayeshababar18" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-indigo-300 transition-colors duration-300"><LinkedinIcon /></a>
-            <a href="https://github.com/ayeshababar18" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors duration-300"><GithubIcon /></a>
-            <a href="mailto:ayeshaababar18@gmail.com" className="text-slate-400 hover:text-indigo-300 transition-colors duration-300"><Mail className="w-5 h-5" /></a>
+            <a href="https://linkedin.com/in/ayeshaababar18" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-indigo-300 transition-colors duration-300"><LinkedinIcon /></a>
+            <a href="https://github.com/ayeshaababar18" target="_blank" rel="noreferrer" className="text-slate-400 hover:text-white transition-colors duration-300"><GithubIcon /></a>
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ayeshaababar18@gmail.com" target="_blank" rel="noopener noreferrer" className="text-slate-400 hover:text-indigo-300 transition-colors duration-300"><Mail className="w-5 h-5" /></a>
           </div>
         </motion.div>
       </nav>
@@ -258,7 +258,7 @@ export default function App() {
             <FadeIn>
               <div className="flex justify-between items-end mb-10">
                 <h2 className="text-4xl font-bold text-white">Experience & Projects</h2>
-                <a href="https://github.com/ayeshababar18" target="_blank" rel="noreferrer" className="hidden sm:flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
+                <a href="https://github.com/ayeshaababar18" target="_blank" rel="noreferrer" className="hidden sm:flex items-center text-indigo-400 hover:text-indigo-300 font-medium transition-colors">
                   View GitHub <ExternalLink className="w-4 h-4 ml-2" />
                 </a>
               </div>
@@ -396,7 +396,7 @@ export default function App() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-white/5 py-12 mt-20 glass-card rounded-none border-b-0 border-l-0 border-r-0">
+      <footer className="border-t border-white/5 py-12 mt-20 relative z-10 glass-card rounded-none border-b-0 border-l-0 border-r-0">
         <div className="max-w-5xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-2xl font-bold text-white mb-2">Ayesha Babar</h3>
@@ -404,13 +404,13 @@ export default function App() {
           </div>
           
           <div className="flex items-center space-x-5">
-            <a href="https://linkedin.com/in/ayeshababar18" target="_blank" rel="noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-indigo-300 border border-white/5 transition-all">
+            <a href="https://linkedin.com/in/ayeshaababar18" target="_blank" rel="noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-indigo-300 border border-white/5 transition-all">
               <LinkedinIcon className="w-5 h-5" />
             </a>
-            <a href="https://github.com/ayeshababar18" target="_blank" rel="noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-white border border-white/5 transition-all">
+            <a href="https://github.com/ayeshaababar18" target="_blank" rel="noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-white border border-white/5 transition-all">
               <GithubIcon className="w-5 h-5" />
             </a>
-            <a href="mailto:ayeshaababar18@gmail.com" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-indigo-300 border border-white/5 transition-all">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=ayeshaababar18@gmail.com" target="_blank" rel="noopener noreferrer" className="w-12 h-12 flex items-center justify-center rounded-full glass-card text-slate-400 hover:text-indigo-300 border border-white/5 transition-all">
               <Mail className="w-5 h-5" />
             </a>
           </div>
