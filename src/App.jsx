@@ -136,7 +136,7 @@ export default function App() {
                     Ayesha Babar
                   </h1>
                   <p className="text-xl md:text-2xl font-medium text-indigo-300">
-                    Software Engineer & Web Developer
+                    Software Engineer
                   </p>
                 </div>
                 <p className="text-lg md:text-xl text-slate-400 leading-relaxed max-w-lg mx-auto md:mx-0 font-light">
