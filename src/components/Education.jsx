@@ -1,175 +1,278 @@
-import { motion } from "framer-motion";
-import TiltCard from "./TiltCard";
+import { motion } from 'framer-motion'
+import { Trophy } from 'lucide-react'
+import { useTilt } from '../utils/tiltEffect'
+
+const noMotion = typeof window !== 'undefined'
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : false
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
+function Pill({ children }) {
+  return (
+    <span
+      style={{
+        background: 'var(--accent-lighter)',
+        color: 'var(--accent)',
+        fontFamily: "'Fira Code', monospace",
+        fontSize: '0.7rem',
+        borderRadius: '20px',
+        padding: '3px 12px',
+      }}
+    >
+      {children}
+    </span>
+  )
+}
 
 export default function Education() {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 32, filter: 'blur(4px)' },
-    visible: { 
-      opacity: 1, y: 0, filter: 'blur(0px)',
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, x: -20 },
-    visible: { 
-      opacity: 1, x: 0,
-      transition: { duration: 0.5, ease: "easeOut" }
-    }
-  };
+  const tilt1 = useTilt()
+  const tilt2 = useTilt()
+  const tiltHonors = useTilt()
+  const Wrap = noMotion ? 'div' : motion.div
 
   return (
-    <section id="education" className="section-padding position-relative">
+    <section id="education" className="section-padding">
       <div className="container">
         <div className="row justify-content-center">
-          <div className="col-lg-8">
-            
-            <motion.div 
-              initial={prefersReducedMotion ? "visible" : "hidden"} 
-              whileInView="visible" 
-              viewport={{ once: true, margin: "-60px" }} 
-              variants={sectionVariants}
-              className="mb-5 text-center text-md-start"
+          <div className="col-12 col-lg-8">
+            {/* Heading */}
+            <Wrap
+              {...(noMotion
+                ? {}
+                : {
+                    variants: fadeUp,
+                    initial: 'hidden',
+                    whileInView: 'visible',
+                    viewport: { once: true, amount: 0.15 },
+                  })}
             >
-              <div className="eyebrow">BACKGROUND</div>
-              <h2 className="text-white" style={{ fontSize: "2.5rem" }}>Education & Honors</h2>
-            </motion.div>
-
-            {/* Timeline */}
-            <div className="position-relative ps-4 ps-md-5 mb-5">
-              {/* Vertical Line */}
-              <div 
-                className="position-absolute top-0 bottom-0" 
-                style={{ 
-                  left: "14px", 
-                  width: "2px", 
-                  backgroundColor: "var(--accent)", 
-                  opacity: 0.5,
-                  borderRadius: "2px"
-                }} 
-              />
-
-              {/* Entry 1 */}
-              <motion.div 
-                initial={prefersReducedMotion ? "visible" : "hidden"} 
-                whileInView="visible" 
-                viewport={{ once: true, margin: "-60px" }} 
-                variants={itemVariants}
-                className="position-relative mb-5"
-              >
-                <TiltCard>
-                  {/* Node */}
-                <div 
-                  className="position-absolute rounded-circle" 
-                  style={{ 
-                    left: "-33px", 
-                    top: "6px", 
-                    width: "12px", 
-                    height: "12px", 
-                    backgroundColor: "var(--accent)", 
-                    border: "3px solid var(--bg-primary)",
-                    boxShadow: "0 0 0 2px var(--border-accent)"
-                  }} 
-                />
-
-                <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-2 mb-2">
-                  <h3 className="text-white m-0" style={{ fontSize: "1.3rem" }}>BS Software Engineering</h3>
-                  <span style={{ fontFamily: "'Fira Code', monospace", fontSize: "0.85rem", color: "var(--text-muted)" }}>
-                    Feb 2023 – Present | 7th Semester
-                  </span>
-                </div>
-                
-                <p style={{ color: "var(--accent-light)", fontSize: "1rem", fontWeight: 500, marginBottom: "0.75rem" }}>
-                  Capital University of Science & Technology (CUST)
-                </p>
-
-                <div className="mb-3">
-                  <span 
-                    className="skill-badge d-inline-block"
-                    style={{
-                      backgroundColor: "rgba(16,185,129,0.08)",
-                      border: "1px solid var(--border-accent)",
-                      color: "var(--accent)",
-                      borderRadius: "20px",
-                      fontFamily: "'Fira Code', monospace",
-                      fontSize: "0.8rem",
-                      padding: "4px 12px"
-                    }}
-                  >
-                    CGPA: 3.67 / 4.00
-                  </span>
-                </div>
-
-                <ul style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.6, margin: 0, paddingLeft: "1.2rem" }}>
-                  <li className="mb-2">Specializing in React.js, web development, and software design</li>
-                  <li>Recipient of Dean's Roll of Honor for 6 consecutive semesters</li>
-                </ul>
-                </TiltCard>
-              </motion.div>
-
-              {/* Entry 2 */}
-              <motion.div 
-                initial={prefersReducedMotion ? "visible" : "hidden"} 
-                whileInView="visible" 
-                viewport={{ once: true, margin: "-60px" }} 
-                variants={itemVariants}
-                className="position-relative"
-              >
-                <TiltCard>
-                  {/* Node */}
-                <div 
-                  className="position-absolute rounded-circle" 
-                  style={{ 
-                    left: "-33px", 
-                    top: "6px", 
-                    width: "12px", 
-                    height: "12px", 
-                    backgroundColor: "var(--bg-card)", 
-                    border: "3px solid var(--bg-primary)",
-                    boxShadow: "0 0 0 2px var(--border)"
-                  }} 
-                />
-
-                <h3 className="text-white m-0 mb-1" style={{ fontSize: "1.3rem" }}>ICS — Computer Science</h3>
-                <p style={{ color: "var(--text-secondary)", fontSize: "1rem", margin: 0 }}>
-                  Askaria College for Women
-                </p>
-                </TiltCard>
-              </motion.div>
-
-            </div>
-
-            {/* Honors Card */}
-            <motion.div
-              initial={prefersReducedMotion ? "visible" : "hidden"}
-              whileInView="visible"
-              viewport={{ once: true, margin: "-60px" }}
-              variants={sectionVariants}
-            >
-              <TiltCard 
-                className="glow-border d-flex align-items-start gap-3"
-                style={{ 
-                  backgroundColor: "rgba(16,185,129,0.05)", 
-                  border: "1px solid var(--border-accent)", 
-                  borderRadius: "12px", 
-                  padding: "1.5rem" 
+              <span className="eyebrow">Background</span>
+              <h2
+                style={{
+                  fontFamily: "'Outfit', sans-serif",
+                  fontWeight: 800,
+                  fontSize: 'clamp(2rem, 4vw, 3rem)',
+                  color: 'var(--text-primary)',
                 }}
               >
-                <div style={{ fontSize: "1.5rem" }}>🏆</div>
-                <div>
-                  <h4 className="text-white mb-2" style={{ fontSize: "1.15rem" }}>Dean's Roll of Honor</h4>
-                  <p className="m-0" style={{ color: "var(--text-secondary)", fontSize: "0.95rem", lineHeight: 1.5 }}>
-                    Awarded for academic excellence across 6 consecutive semesters at CUST — consistently maintaining a CGPA of 3.67/4.00
-                  </p>
-                </div>
-              </TiltCard>
-            </motion.div>
+                Education & Honors
+              </h2>
+            </Wrap>
 
+            {/* Timeline */}
+            <Wrap
+              {...(noMotion
+                ? {}
+                : {
+                    variants: staggerContainer,
+                    initial: 'hidden',
+                    whileInView: 'visible',
+                    viewport: { once: true, amount: 0.1 },
+                  })}
+            >
+              <div
+                style={{
+                  position: 'relative',
+                  paddingLeft: '52px',
+                  marginTop: '32px',
+                }}
+              >
+                <div className="timeline-line" />
+
+                {/* Entry 1 — BS SE */}
+                <Wrap
+                  {...(noMotion ? {} : { variants: staggerItem })}
+                  style={{ position: 'relative', marginBottom: '40px' }}
+                >
+                  <div className="timeline-dot" style={{ top: '6px' }} />
+                  <div
+                    ref={tilt1.ref}
+                    onMouseMove={tilt1.onMouseMove}
+                    onMouseLeave={tilt1.onMouseLeave}
+                    className="card-base p-4"
+                  >
+                    <div className="d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-2">
+                      <div
+                        style={{
+                          fontFamily: "'Outfit', sans-serif",
+                          fontWeight: 700,
+                          fontSize: '1.1rem',
+                          color: 'var(--text-primary)',
+                        }}
+                      >
+                        BS Software Engineering
+                      </div>
+                      <Pill>Feb 2023 – Present</Pill>
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontWeight: 500,
+                        color: 'var(--text-secondary)',
+                        marginTop: '4px',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      Capital University of Science & Technology (CUST)
+                    </div>
+                    <div className="d-flex gap-2 mt-2 flex-wrap">
+                      <Pill>7th Semester</Pill>
+                      <Pill>CGPA 3.67 / 4.00</Pill>
+                    </div>
+                    <ul
+                      style={{
+                        marginTop: '12px',
+                        paddingLeft: '18px',
+                        marginBottom: 0,
+                      }}
+                    >
+                      <li
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '0.85rem',
+                          color: 'var(--text-secondary)',
+                          lineHeight: 1.6,
+                          marginBottom: '4px',
+                        }}
+                      >
+                        Specializing in React.js, web development, and software
+                        design
+                      </li>
+                      <li
+                        style={{
+                          fontFamily: "'Inter', sans-serif",
+                          fontSize: '0.85rem',
+                          color: 'var(--text-secondary)',
+                          lineHeight: 1.6,
+                        }}
+                      >
+                        Recipient of Dean's Roll of Honor for 6 consecutive
+                        semesters
+                      </li>
+                    </ul>
+                  </div>
+                </Wrap>
+
+                {/* Entry 2 — ICS */}
+                <Wrap
+                  {...(noMotion ? {} : { variants: staggerItem })}
+                  style={{ position: 'relative', marginBottom: '40px' }}
+                >
+                  <div className="timeline-dot" style={{ top: '6px' }} />
+                  <div
+                    ref={tilt2.ref}
+                    onMouseMove={tilt2.onMouseMove}
+                    onMouseLeave={tilt2.onMouseLeave}
+                    className="card-base p-4"
+                  >
+                    <div
+                      style={{
+                        fontFamily: "'Outfit', sans-serif",
+                        fontWeight: 700,
+                        fontSize: '1.1rem',
+                        color: 'var(--text-primary)',
+                      }}
+                    >
+                      ICS – Computer Science
+                    </div>
+                    <div
+                      style={{
+                        fontFamily: "'Inter', sans-serif",
+                        fontWeight: 500,
+                        color: 'var(--text-secondary)',
+                        marginTop: '4px',
+                        fontSize: '0.9rem',
+                      }}
+                    >
+                      Askaria College for Women
+                    </div>
+                  </div>
+                </Wrap>
+              </div>
+            </Wrap>
+
+            {/* Honors card */}
+            <Wrap
+              {...(noMotion
+                ? {}
+                : {
+                    variants: fadeUp,
+                    initial: 'hidden',
+                    whileInView: 'visible',
+                    viewport: { once: true, amount: 0.15 },
+                  })}
+            >
+              <div
+                ref={tiltHonors.ref}
+                onMouseMove={tiltHonors.onMouseMove}
+                onMouseLeave={tiltHonors.onMouseLeave}
+                className="card-base p-4 mt-2 d-flex align-items-start gap-3"
+                style={{
+                  background:
+                    'linear-gradient(135deg, rgba(5,150,105,0.04), rgba(16,185,129,0.02))',
+                  borderColor: 'var(--border-accent)',
+                }}
+              >
+                <Trophy
+                  size={28}
+                  style={{
+                    color: 'var(--accent)',
+                    flexShrink: 0,
+                    marginTop: '4px',
+                  }}
+                />
+                <div>
+                  <div
+                    style={{
+                      fontFamily: "'Outfit', sans-serif",
+                      fontWeight: 700,
+                      fontSize: '1.1rem',
+                      color: 'var(--text-primary)',
+                    }}
+                  >
+                    Dean's Roll of Honor
+                  </div>
+                  <div
+                    style={{
+                      fontFamily: "'Inter', sans-serif",
+                      fontWeight: 400,
+                      fontSize: '0.9rem',
+                      color: 'var(--text-secondary)',
+                      marginTop: '4px',
+                      lineHeight: 1.6,
+                    }}
+                  >
+                    Awarded for academic excellence across 6 consecutive semesters
+                    at CUST, consistently maintaining a CGPA of 3.67/4.00
+                  </div>
+                </div>
+              </div>
+            </Wrap>
           </div>
         </div>
       </div>
     </section>
-  );
+  )
 }

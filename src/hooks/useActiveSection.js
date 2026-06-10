@@ -1,26 +1,21 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect } from 'react'
 
-const SECTIONS = ["hero", "about", "skills", "projects", "education", "contact"];
-
-export function useActiveSection() {
-  const [active, setActive] = useState("hero");
-
+export function useActiveSection(ids) {
+  const [active, setActive] = useState(ids[0])
   useEffect(() => {
-    const observers = [];
-    SECTIONS.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const observer = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActive(id);
-        },
-        { rootMargin: "-40% 0px -55% 0px" }
-      );
-      observer.observe(el);
-      observers.push(observer);
-    });
-    return () => observers.forEach((o) => o.disconnect());
-  }, []);
-
-  return active;
+    const observer = new IntersectionObserver(
+      entries => {
+        entries.forEach(e => {
+          if (e.isIntersecting) setActive(e.target.id)
+        })
+      },
+      { rootMargin: '-40% 0px -55% 0px' }
+    )
+    ids.forEach(id => {
+      const el = document.getElementById(id)
+      if (el) observer.observe(el)
+    })
+    return () => observer.disconnect()
+  }, [ids])
+  return active
 }

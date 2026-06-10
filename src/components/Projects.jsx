@@ -1,196 +1,288 @@
-import { motion } from "framer-motion";
-import { Globe, ExternalLink } from "lucide-react";
-import TiltCard from "./TiltCard";
+import { motion } from 'framer-motion'
+import { ExternalLink, Globe } from 'lucide-react'
+import { useTilt } from '../utils/tiltEffect'
+
+const noMotion = typeof window !== 'undefined'
+  ? window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  : false
+
+const fadeUp = {
+  hidden: { opacity: 0, y: 30 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] },
+  },
+}
+
+const staggerContainer = {
+  hidden: {},
+  visible: { transition: { staggerChildren: 0.1, delayChildren: 0.05 } },
+}
+
+const staggerItem = {
+  hidden: { opacity: 0, y: 20 },
+  visible: {
+    opacity: 1,
+    y: 0,
+    transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] },
+  },
+}
 
 const projects = [
   {
-    title: "Immersive VR Environment",
+    num: '01',
+    title: 'Immersive VR Environment',
     inProgress: true,
-    banner: "linear-gradient(135deg, #064e3b, #065f46)",
-    tech: ["Unity 3D", "Kotlin", "Firebase", "Agora SDK", "Photon Fusion 2"],
+    banner: 'linear-gradient(135deg, #d1fae5, #a7f3d0)',
+    tech: ['Unity 3D', 'Kotlin', 'Firebase', 'Agora SDK', 'Photon Fusion 2'],
     points: [
-      "Developing a mobile-based multiplayer 3D virtual environment with real-time voice communication for Google Cardboard VR headsets",
-      "Targeting users in developing regions by removing the barrier of expensive hardware for immersive experiences"
-    ]
+      'Mobile multiplayer 3D VR for Google Cardboard headsets',
+      'Targets developing regions, removes expensive hardware barrier',
+    ],
   },
   {
-    title: "University Sports Portal",
+    num: '02',
+    title: 'University Sports Portal',
     inProgress: false,
-    banner: "linear-gradient(135deg, #052e16, #064e3b)",
-    tech: ["ASP.NET MVC", "C#", "Bootstrap 5", "MS SQL Server"],
+    banner: 'linear-gradient(135deg, #cffafe, #a5f3fc)',
+    tech: ['ASP.NET MVC', 'C#', 'Bootstrap 5', 'MS SQL Server'],
     points: [
-      "Engineered a secure, role-based web app to manage and schedule university sports events across multiple user tiers",
-      "Designed full database schema and back-end logic ensuring data integrity and multi-level access control"
-    ]
+      'Secure role-based web app for university sports scheduling',
+      'Full database schema with multi-level access control',
+    ],
   },
   {
-    title: "EcoHabit Builder",
+    num: '03',
+    title: 'EcoHabit Builder',
     inProgress: false,
-    banner: "linear-gradient(135deg, #022c22, #064e3b)",
-    tech: ["Java", "Android Studio", "SQLite"],
+    banner: 'linear-gradient(135deg, #dcfce7, #bbf7d0)',
+    tech: ['Java', 'Android Studio', 'SQLite'],
     points: [
-      "Built a native Android app with gamified task tracking and daily habit management to promote eco-friendly routines",
-      "Implemented persistent local storage via SQLite and personalized impact reports to sustain user engagement"
-    ]
+      'Gamified Android habit tracker for eco-friendly routines',
+      'SQLite persistence + personalized impact reports',
+    ],
   },
   {
-    title: "Give and Grow Platform",
+    num: '04',
+    title: 'Give and Grow Platform',
     inProgress: false,
-    banner: "linear-gradient(135deg, #064e3b, #047857)",
-    tech: ["Web Development", "SDLC", "Requirements Engineering"],
+    banner: 'linear-gradient(135deg, #d1fae5, #6ee7b7)',
+    tech: ['Web Development', 'SDLC', 'Requirements Engineering'],
     points: [
-      "Led end-to-end development of a community engagement web platform from stakeholder requirements through full deployment",
-      "Coordinated cross-functional team efforts as project lead across planning, design, development, and delivery"
-    ]
-  }
-];
+      'Community engagement platform, led end-to-end as project lead',
+      'Cross-functional team coordination from planning to deployment',
+    ],
+  },
+]
 
-export default function Projects() {
-  const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-  const sectionVariants = {
-    hidden: { opacity: 0, y: 32, filter: 'blur(4px)' },
-    visible: { 
-      opacity: 1, y: 0, filter: 'blur(0px)',
-      transition: { duration: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
-  };
-
-  const containerVariants = {
-    hidden: {},
-    visible: { transition: { staggerChildren: 0.09 } }
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20, scale: 0.97 },
-    visible: { 
-      opacity: 1, y: 0, scale: 1,
-      transition: { duration: 0.45, ease: [0.25, 0.46, 0.45, 0.94] }
-    }
-  };
+function ProjectCard({ project }) {
+  const tilt = useTilt()
 
   return (
-    <section id="projects" className="section-padding position-relative">
-      <div className="container">
-        
-        <motion.div 
-          initial={prefersReducedMotion ? "visible" : "hidden"} 
-          whileInView="visible" 
-          viewport={{ once: true, margin: "-60px" }} 
-          variants={sectionVariants}
-          className="mb-5"
+    <div
+      ref={tilt.ref}
+      onMouseMove={tilt.onMouseMove}
+      onMouseLeave={tilt.onMouseLeave}
+      className="card-base h-100 d-flex flex-column"
+      style={{ overflow: 'hidden' }}
+    >
+      {/* Banner */}
+      <div
+        style={{
+          height: '80px',
+          background: project.banner,
+          position: 'relative',
+        }}
+      >
+        <span
+          style={{
+            position: 'absolute',
+            top: '12px',
+            right: '16px',
+            fontFamily: "'Fira Code', monospace",
+            fontSize: '1.4rem',
+            fontWeight: 700,
+            color: 'var(--accent)',
+            opacity: 0.4,
+          }}
         >
-          <div className="eyebrow">MY WORK</div>
-          <h2 className="text-white" style={{ fontSize: "2.5rem" }}>Projects</h2>
-        </motion.div>
+          {project.num}
+        </span>
+      </div>
 
-        <motion.div 
-          className="row g-4"
-          variants={containerVariants}
-          initial={prefersReducedMotion ? "visible" : "hidden"}
-          whileInView="visible"
-          viewport={{ once: true, margin: "-60px" }}
+      {/* Body */}
+      <div className="p-4 d-flex flex-column flex-grow-1">
+        {project.inProgress && (
+          <span
+            style={{
+              background: '#fef3c7',
+              color: '#92400e',
+              fontFamily: "'Fira Code', monospace",
+              fontSize: '0.68rem',
+              padding: '3px 10px',
+              borderRadius: '20px',
+              border: '1px solid #fde68a',
+              display: 'inline-block',
+              marginBottom: '8px',
+              alignSelf: 'flex-start',
+            }}
+          >
+            🔬 IN PROGRESS
+          </span>
+        )}
+
+        <div
+          style={{
+            fontFamily: "'Outfit', sans-serif",
+            fontWeight: 700,
+            fontSize: '1.05rem',
+            color: 'var(--text-primary)',
+            marginBottom: '8px',
+          }}
         >
-          {projects.map((project, i) => (
-            <div className="col-md-6" key={i}>
-              <motion.div variants={itemVariants} className="h-100">
-                <TiltCard 
-                  className="glow-border h-100 d-flex flex-column" 
-                  style={{ 
-                    backgroundColor: "var(--bg-card)", 
-                    borderRadius: "16px", 
-                    overflow: "hidden" 
-                  }}
-                >
-                  {/* Banner */}
-                  <div className="position-relative" style={{ height: "72px", background: project.banner }}>
-                    {project.inProgress && (
-                      <span 
-                        className="position-absolute" 
-                        style={{ 
-                          top: "16px", 
-                          right: "16px", 
-                          backgroundColor: "rgba(0,0,0,0.5)", 
-                          backdropFilter: "blur(4px)", 
-                          color: "white", 
-                          padding: "4px 10px", 
-                          borderRadius: "12px", 
-                          fontFamily: "'Fira Code', monospace", 
-                          fontSize: "0.7rem", 
-                          border: "1px solid rgba(255,255,255,0.2)" 
-                        }}
-                      >
-                        🔬 IN PROGRESS
-                      </span>
-                    )}
-                  </div>
+          {project.title}
+        </div>
 
-                  {/* Body */}
-                  <div className="p-4 d-flex flex-column flex-grow-1">
-                    <h3 className="text-white mb-3" style={{ fontSize: "1.25rem", lineHeight: 1.3 }}>
-                      {project.title}
-                    </h3>
-                    
-                    {/* Tech Badges */}
-                    <div className="d-flex flex-wrap gap-2 mb-3">
-                      {project.tech.map((tech, j) => (
-                        <div 
-                          key={j} 
-                          className="skill-badge" 
-                          style={{
-                            backgroundColor: "rgba(16,185,129,0.08)",
-                            border: "1px solid var(--border-accent)",
-                            color: "var(--text-secondary)",
-                            borderRadius: "20px",
-                            fontFamily: "'Fira Code', monospace",
-                            fontSize: "0.78rem",
-                            padding: "4px 12px"
-                          }}
-                        >
-                          {tech}
-                        </div>
-                      ))}
-                    </div>
-
-                    {/* Bullet Points */}
-                    <ul className="mb-4 flex-grow-1 ps-3" style={{ color: "var(--text-secondary)", fontSize: "0.9rem", lineHeight: 1.6 }}>
-                      {project.points.map((point, j) => (
-                        <li key={j} className="mb-2" style={{ paddingLeft: "4px" }}>
-                          {point}
-                        </li>
-                      ))}
-                    </ul>
-
-                    {/* Footer Links */}
-                    <div className="mt-auto pt-3 d-flex align-items-center gap-3" style={{ borderTop: "1px solid var(--border)" }}>
-                      <a 
-                        href="#" 
-                        className="text-decoration-none d-flex align-items-center gap-2" 
-                        style={{ color: "var(--text-muted)", transition: "color 0.2s ease" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)" }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted)" }}
-                      >
-                        <Globe size={18} />
-                      </a>
-                      <a 
-                        href="#" 
-                        className="text-decoration-none d-flex align-items-center gap-2" 
-                        style={{ color: "var(--text-muted)", transition: "color 0.2s ease" }}
-                        onMouseEnter={(e) => { e.currentTarget.style.color = "var(--accent)" }}
-                        onMouseLeave={(e) => { e.currentTarget.style.color = "var(--text-muted)" }}
-                      >
-                        <ExternalLink size={18} />
-                      </a>
-                    </div>
-
-                  </div>
-                </TiltCard>
-              </motion.div>
-            </div>
+        {/* Tech tags */}
+        <div className="d-flex flex-wrap gap-1 mb-3">
+          {project.tech.map((t, i) => (
+            <span
+              key={i}
+              style={{
+                background: 'var(--bg-secondary)',
+                border: '1px solid var(--border)',
+                fontFamily: "'Fira Code', monospace",
+                fontSize: '0.7rem',
+                padding: '3px 10px',
+                borderRadius: '20px',
+                color: 'var(--text-secondary)',
+              }}
+            >
+              {t}
+            </span>
           ))}
-        </motion.div>
+        </div>
 
+        {/* Bullet points */}
+        <ul
+          style={{
+            listStyle: 'none',
+            padding: 0,
+            margin: 0,
+            flex: 1,
+          }}
+        >
+          {project.points.map((point, i) => (
+            <li
+              key={i}
+              style={{
+                fontFamily: "'Inter', sans-serif",
+                fontWeight: 400,
+                fontSize: '0.85rem',
+                color: 'var(--text-secondary)',
+                lineHeight: 1.6,
+                marginBottom: '6px',
+              }}
+            >
+              → {point}
+            </li>
+          ))}
+        </ul>
+
+        {/* Footer */}
+        <div
+          className="d-flex justify-content-between align-items-center pt-3 mt-3"
+          style={{ borderTop: '1px solid var(--border)' }}
+        >
+          <a
+            href="#"
+            style={{
+              color: 'var(--accent)',
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 600,
+              fontSize: '0.85rem',
+              textDecoration: 'none',
+            }}
+            onMouseEnter={(e) => (e.target.style.textDecoration = 'underline')}
+            onMouseLeave={(e) => (e.target.style.textDecoration = 'none')}
+          >
+            View Project
+          </a>
+          <div className="d-flex gap-3">
+            <a
+              href="#"
+              style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              <Globe size={16} />
+            </a>
+            <a
+              href="#"
+              style={{ color: 'var(--text-muted)', transition: 'color 0.2s' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = 'var(--accent)')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = 'var(--text-muted)')}
+            >
+              <ExternalLink size={16} />
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default function Projects() {
+  const Wrap = noMotion ? 'div' : motion.div
+
+  return (
+    <section id="projects" className="section-padding section-alt">
+      <div className="container">
+        <Wrap
+          {...(noMotion
+            ? {}
+            : {
+                variants: fadeUp,
+                initial: 'hidden',
+                whileInView: 'visible',
+                viewport: { once: true, amount: 0.15 },
+              })}
+        >
+          <span className="eyebrow">My Work</span>
+          <h2
+            style={{
+              fontFamily: "'Outfit', sans-serif",
+              fontWeight: 800,
+              fontSize: 'clamp(2rem, 4vw, 3rem)',
+              color: 'var(--text-primary)',
+            }}
+          >
+            Projects
+          </h2>
+        </Wrap>
+
+        <Wrap
+          {...(noMotion
+            ? {}
+            : {
+                variants: staggerContainer,
+                initial: 'hidden',
+                whileInView: 'visible',
+                viewport: { once: true, amount: 0.1 },
+              })}
+        >
+          <div className="row g-4 mt-4">
+            {projects.map((project, i) => (
+              <div className="col-12 col-md-6" key={i}>
+                <Wrap {...(noMotion ? {} : { variants: staggerItem })}>
+                  <ProjectCard project={project} />
+                </Wrap>
+              </div>
+            ))}
+          </div>
+        </Wrap>
       </div>
     </section>
-  );
+  )
 }
